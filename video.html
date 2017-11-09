@@ -80,9 +80,17 @@
 		.container-fluid {
 			padding: 0;
 		}
-		#umn-main {
-			padding-left: 100px;
-			padding-right: 100px;
+		@media screen and (min-width: 768px) {
+				#umn-main {
+				padding-left: 100px;
+				padding-right: 100px;
+			}
+		}
+		@media screen and (max-width: 768px) {
+			#umn-main {
+				padding-left: 20px;
+				padding-right: 20px;
+			}
 		}
 		</style>
 		<!-- jQuery -->
