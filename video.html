@@ -118,7 +118,7 @@
 			updateHash = function() {
 
 				targetHashArray = new Array();
-				$(".selectDropdown").each(function () {
+				$(".headerSelect").each(function () {
 					if($(this).val() !== "") {
 						targetHashArray.push($(this).val());	
 					}
@@ -130,14 +130,14 @@
 			loadFromHash = function() {
 				hash = window.location.hash.replace("#", "");
 				exploded = hash.split("|");
-				$(".selectDropdown > option").each(function() {
+				$(".headerSelect > option").each(function() {
 					if($.inArray($(this).val(), exploded) >= 0) {
 
 						$(this).attr("selected", "selected");
 					}
 
 				});
-				$(".selectDropdown").trigger("change");
+				$(".headerSelect").trigger("change");
 			}
 
 			buildDataTable = function(csvData) {
@@ -174,7 +174,7 @@
 						for(i=2; i<headers.length; i++) {
 							this.api().columns(i).every( function () {
 								var column = this;
-								var select = $('<span class="hidden-lg">' + headers[i] + '</span><select class="form-control selectDropdown hidden-sm hidden-xs hidden-md"><option value="">' + headers[i] + '</option></select>')
+								var select = $('<span class="hidden-lg">' + headers[i] + '</span><select class="form-control headerSelect selectDropdown hidden-sm hidden-xs hidden-md" name="header' + i + '""><option value="">' + headers[i] + '</option></select>')
 								.appendTo( $(column.header()).empty() )
 								.on('click', function(e) {
 									e.stopPropagation(); 
@@ -183,6 +183,8 @@
 									var val = $.fn.dataTable.util.escapeRegex(
 									 	$(this).val()
 									);
+									
+									$("[name=" + $(this).attr("name") +"]").val($(this).val());
 									updateHash();
 									column
 									.search( val ? '^'+val+'$' : '', true, false )
@@ -190,7 +192,7 @@
 								} );
 
 
-								var select2 = $('<select class="form-control selectRow selectDropdown"><option value="">' + headers[i] + '</option></select>')
+								var select2 = $('<select class="form-control selectRow selectDropdown" name="header' + i + '""><option value="">' + headers[i] + '</option></select>')
 								.appendTo( $('.secretSortDiv') )
 								.on('click', function(e) {
 									e.stopPropagation(); 
@@ -199,6 +201,8 @@
 									var val = $.fn.dataTable.util.escapeRegex(
 									 	$(this).val()
 									);
+									
+									$("[name=" + $(this).attr("name") +"]").val($(this).val());
 									updateHash();
 									column
 									.search( val ? '^'+val+'$' : '', true, false )
