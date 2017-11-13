@@ -124,11 +124,11 @@
 					}
 				});
 
-				history.replaceState(undefined, undefined, "#" + targetHashArray.join("|"))
+				history.replaceState(undefined, undefined, "#" + encodeURI(targetHashArray.join("|")))
 			}
 
 			loadFromHash = function() {
-				hash = window.location.hash.replace("#", "");
+				hash = decodeURI(window.location.hash.replace("#", ""));
 				exploded = hash.split("|");
 				$(".headerSelect > option").each(function() {
 					if($.inArray($(this).val(), exploded) >= 0) {
@@ -161,7 +161,7 @@
 					{ title: headers[0], visible: false},
 					{ title: headers[1], 
 					render: function (data, type, row, meta) {
-                    	return '<a href="' + row[0] + '">' + row[1] + '</a>';
+                    	return '<a target="_blank" href="' + row[0] + '">' + row[1] + '</a>';
                 	} 
                 	},
 					{ title: headers[2] },
